@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>URL-Shortner</title>
+  </head>
+  <style>
+    body {
+      font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", "Geneva", Verdana, sans-serif;
+        color: white;
+        background-color: black;
+    }
+
+  </style>
+  <body>
+    <h1>URL Shortener</h1>
+    <form action="/test" method="POST">
+      <label>Enter your URL here:</label>
+      <input
+        type="text"
+        name="originalUrl"
+        placeholder="https://www.example.com"
+        required
+      />
+      <button type="submit">Shorten URL</button>
+    </form>
+
+    <% if (locals.shortUrl) { %>
+    <p>Your shortened URL is: <a href="<%= shortUrl %>"><%= shortUrl %></a></p>
+    <table border="1" cellpadding="10" >
+        <tr>
+            <th>Clicks</th>
+            <th>Created At</th>
+        </tr>
+        <tr>
+            <td><%= locals.clicks %></td>
+            <td><%= locals.createdAt %></td>
+        </tr>
+    </table>
+    <% } %>
+  </body>
+</html>
