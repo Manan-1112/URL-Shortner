@@ -1,7 +1,7 @@
 const express = require("express");
 const url = require("../models/url");
 const user = require("../models/user");
-
+const { setUser, getuser } = require("../services/checkAuth");  
 async function handlePostReq(req, res) {
 
   const { originalUrl } = req.body;
@@ -47,6 +47,8 @@ async function handlelogin(req, res) {
   const entry = await user.findOne({ email: email.trim() });
   if (!entry) return res.status(404).render("login", { error: "User not found" }); 
   if (entry.password !== password) return res.status(401).render("login", { error: "Invalid password" });
+  const token = setUser({ id: entry._id, email: entry.email });
+  res.cookie("auth_uuid", token); 
   res.status(200).render("index", { message: "Login successful" });
 } 
 
@@ -56,7 +58,7 @@ async function handleSignup(req, res) {
   const { email, password } = req.body;
   const existingUser = await user.findOne({ email: email.trim() });
   if (existingUser) return res.status(400).render("signup", { error: "User already exists" });
-  const newUser = await user.create({ email: email.trim(), password });
+  const newUser = await user.create({ email: email.trim(), password,createdBy:newUser._id });
   res.status(201).render("index", { message: "Signup successful" });
 }
 module.exports = { handleGetrequest, handlePostReq , analysis , handlelogin, handleSignup};

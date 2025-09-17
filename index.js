@@ -1,12 +1,14 @@
 const express = require('express');
+require('dotenv').config();
 const cookieParser = require('cookie-parser');
-const assignUuid = require('./middlewares/assignUuid');
+
 const app = express();
 const path = require('path');
 const port = 3000;
 const route=require("./routes/routes.js")
+
 app.use(cookieParser());
-app.use(assignUuid);
+//app.use(assignUuid);
 app.use(express.json());
 app.set("view engine","ejs");
 app.set('views', path.join(__dirname, 'views'));

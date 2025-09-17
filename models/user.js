@@ -13,7 +13,11 @@ const userSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  createdBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user'
+  } 
 });
 
 module.exports = userDb.model('user', userSchema);
